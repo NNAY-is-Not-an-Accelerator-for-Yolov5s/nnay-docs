@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>指令格式 - NNAY Docs</title>
+    <title>格式 - NNAY Docs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "\u6307\u4ee4\u683c\u5f0f";
+        var mkdocs_page_name = "\u683c\u5f0f";
         var mkdocs_page_input_path = "isa/instruction_format.md";
         var mkdocs_page_url = null;
       </script>
@@ -52,29 +52,21 @@
               </ul>
               <p class="caption"><span class="caption-text">指令集架构</span></p>
               <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">指令格式</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">格式</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#nnay">NNAY 指令集简介</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#nnay_1">NNAY 指令集格式</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_2">指令</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#convact">ConvAct</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#block-1">Block 1</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">指令分类</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#block-2">Block 2</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#block-3">Block 3</a>
-    </li>
-        </ul>
-    </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">地址计算</a>
     </li>
     </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../instructions/">指令集</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../registers/">寄存器</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../instructions/">指令</a>
                   </li>
               </ul>
       </div>
@@ -92,7 +84,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">指令集架构</li>
-      <li class="breadcrumb-item active">指令格式</li>
+      <li class="breadcrumb-item active">格式</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -118,14 +110,19 @@
 </thead>
 <tbody>
 <tr>
-<td>[3:0]</td>
-<td>4</td>
+<td>[1:0]</td>
+<td>2</td>
 <td>Opcode</td>
 </tr>
 <tr>
-<td>[7:4]</td>
+<td>[5:2]</td>
 <td>4</td>
 <td>Sub Opcode</td>
+</tr>
+<tr>
+<td>[7:6]</td>
+<td>2</td>
+<td>Funct</td>
 </tr>
 <tr>
 <td>[63:8]</td>
@@ -134,176 +131,31 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_2">指令</h2>
-<h3 id="convact">ConvAct</h3>
-<p>用于执行卷积和激活函数。该指令长度为24字节，格式如下：</p>
-<h4 id="block-1">Block 1</h4>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>长度</th>
-<th>描述</th>
-<th>值域</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>[3:0]</td>
-<td>4</td>
-<td>Opcode</td>
-<td>0x01</td>
-<td></td>
-</tr>
-<tr>
-<td>[7:4]</td>
-<td>4</td>
-<td>Sub Opcode</td>
-<td>0x01</td>
-<td></td>
-</tr>
-<tr>
-<td>[19:8]</td>
-<td>12</td>
-<td>输入通道数</td>
-<td>0-4095</td>
-<td>实际输入通道数-1</td>
-</tr>
-<tr>
-<td>[31:20]</td>
-<td>12</td>
-<td>输出通道数</td>
-<td>0-4095</td>
-<td>实际输出通道数-1</td>
-</tr>
-<tr>
-<td>[43:32]</td>
-<td>12</td>
-<td>输入特征图高度</td>
-<td>0-4095</td>
-<td>实际输入特征图高度-1</td>
-</tr>
-<tr>
-<td>[55:44]</td>
-<td>12</td>
-<td>输入特征图宽度</td>
-<td>0-4095</td>
-<td>实际输入特征图宽度-1</td>
-</tr>
-<tr>
-<td>[59:56]</td>
-<td>4</td>
-<td>卷积核高度</td>
-<td>0-15</td>
-<td>实际卷积核高度-1</td>
-</tr>
-<tr>
-<td>[63:60]</td>
-<td>4</td>
-<td>卷积核宽度</td>
-<td>0-15</td>
-<td>实际卷积核宽度-1</td>
-</tr>
-</tbody>
-</table>
-<h4 id="block-2">Block 2</h4>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>长度</th>
-<th>描述</th>
-<th>值域</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>[3:0]</td>
-<td>4</td>
-<td>上方 Padding 长度</td>
-<td>0-15</td>
-<td></td>
-</tr>
-<tr>
-<td>[7:4]</td>
-<td>4</td>
-<td>下方 Padding 长度</td>
-<td>0-15</td>
-<td></td>
-</tr>
-<tr>
-<td>[11:8]</td>
-<td>4</td>
-<td>左侧 Padding 长度</td>
-<td>0-15</td>
-<td></td>
-</tr>
-<tr>
-<td>[15:12]</td>
-<td>4</td>
-<td>右侧 Padding 长度</td>
-<td>0-15</td>
-<td></td>
-</tr>
-<tr>
-<td>[19:16]</td>
-<td>4</td>
-<td>激活函数</td>
-<td>Enum</td>
-<td>0:None, 1:ReLu, 2:SiLU</td>
-</tr>
-<tr>
-<td>[31:20]</td>
-<td>12</td>
-<td>Reserved</td>
-<td>--</td>
-<td></td>
-</tr>
-<tr>
-<td>[63:32]</td>
-<td>32</td>
-<td>权重首地址</td>
-<td>-</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h4 id="block-3">Block 3</h4>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>长度</th>
-<th>描述</th>
-<th>值域</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>[31:0]</td>
-<td>32</td>
-<td>输入特征图首地址</td>
-<td>-</td>
-<td></td>
-</tr>
-<tr>
-<td>[63:32]</td>
-<td>32</td>
-<td>输出特征图首地址</td>
-<td>-</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<h2 id="_2">指令分类</h2>
+<p>指令分为：</p>
+<ul>
+<li>配置指令 (Configuration Instruction)</li>
+<li>用于配置加速器</li>
+<li>Opcode: 0b00</li>
+<li>计算指令 (Compute Instruction)</li>
+<li>用于执行计算操作</li>
+<li>Opcode: 0b01</li>
+<li>控制指令 (Control Instruction)</li>
+<li>用于控制加速器</li>
+<li>Opcode: 0b10</li>
+</ul>
+<h2 id="_3">地址计算</h2>
+<p>NNAY 指令中出现的地址偏移需要通过以下公式计算：</p>
+<pre><code>Addr = BaseAddr[4:0] &lt;&lt; 27 | Offset[23:0] &lt;&lt; 3 | 0b000
+</code></pre>
+<p>其中，<code>BaseAddr</code> 为基地址，<code>Offset</code> 为偏移量。</p>
+<p>最小寻址单位为字节，均以小端存储。</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../../hardware/core/" class="btn btn-neutral float-left" title="加速器核心"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../instructions/" class="btn btn-neutral float-right" title="指令集">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../registers/" class="btn btn-neutral float-right" title="寄存器">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -329,7 +181,7 @@
       <span><a href="../../hardware/core/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../instructions/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../registers/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
