@@ -8,8 +8,12 @@ nav:
     - 概述: hardware/overview.md
     - 加速器核心: hardware/core.md
   - 指令集架构:
-    - 指令格式: isa/instruction_format.md
-    - 指令集: isa/instructions.md
+    - 格式: isa/instruction_format.md
+    - 寄存器: isa/registers.md
+    - 指令: isa/instructions.md
 
 markdown_extensions:
   - footnotes
+
+plugins:
+  - search
