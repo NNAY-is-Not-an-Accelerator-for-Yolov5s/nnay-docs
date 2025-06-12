@@ -1,17 +1,10 @@
-# Welcome to MkDocs
+# NNAY 文档
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## 项目简介
 
-## Commands
+NNAY is Not an Accelerator for Yolov5s.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## 文档结构
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+- **硬件架构**：详细介绍 NNAY 加速器的硬件设计，包括核心结构、存储系统。 [硬件架构](hardware/core.md)
+- **指令集架构**：全面说明 NNAY 指令集。[ISA](isa/instruction_format.md)
