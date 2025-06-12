@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>指令格式 - NNAY Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u6307\u4ee4\u683c\u5f0f";
+        var mkdocs_page_input_path = "isa/instruction_format.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> NNAY Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">首页</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">硬件架构</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/overview/">概述</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/core/">加速器核心</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">指令集架构</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">指令格式</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#nnay">NNAY 指令集简介</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#nnay_1">NNAY 指令集格式</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">指令</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#convact">ConvAct</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#block-1">Block 1</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#block-2">Block 2</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#block-3">Block 3</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../instructions/">指令集</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">NNAY Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">指令集架构</li>
+      <li class="breadcrumb-item active">指令格式</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="_1">指令集架构概述</h1>
+<h2 id="nnay">NNAY 指令集简介</h2>
+<p>NNAY指令集是一套专门设计用于加速神经网络推理，特别是YOLOv5目标检测模型的指令集架构。该指令集通过优化计算密集型操作（如卷积、池化和激活函数）来提高模型执行效率，减少延迟并降低功耗。</p>
+<p>NNAY指令集的每条指令可能由多个指令块(Instruction Block)组成，每个指令块固定为8字节。</p>
+<h2 id="nnay_1">NNAY 指令集格式</h2>
+<p>NNAY 的每个指令长度不定，但均为8字节的整数倍。</p>
+<p>对于每条指令的头8个字节，规定如下：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>长度</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[3:0]</td>
+<td>4</td>
+<td>Opcode</td>
+</tr>
+<tr>
+<td>[7:4]</td>
+<td>4</td>
+<td>Sub Opcode</td>
+</tr>
+<tr>
+<td>[63:8]</td>
+<td>56</td>
+<td>指令参数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">指令</h2>
+<h3 id="convact">ConvAct</h3>
+<p>用于执行卷积和激活函数。该指令长度为24字节，格式如下：</p>
+<h4 id="block-1">Block 1</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>长度</th>
+<th>描述</th>
+<th>值域</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[3:0]</td>
+<td>4</td>
+<td>Opcode</td>
+<td>0x01</td>
+<td></td>
+</tr>
+<tr>
+<td>[7:4]</td>
+<td>4</td>
+<td>Sub Opcode</td>
+<td>0x01</td>
+<td></td>
+</tr>
+<tr>
+<td>[19:8]</td>
+<td>12</td>
+<td>输入通道数</td>
+<td>0-4095</td>
+<td>实际输入通道数-1</td>
+</tr>
+<tr>
+<td>[31:20]</td>
+<td>12</td>
+<td>输出通道数</td>
+<td>0-4095</td>
+<td>实际输出通道数-1</td>
+</tr>
+<tr>
+<td>[43:32]</td>
+<td>12</td>
+<td>输入特征图高度</td>
+<td>0-4095</td>
+<td>实际输入特征图高度-1</td>
+</tr>
+<tr>
+<td>[55:44]</td>
+<td>12</td>
+<td>输入特征图宽度</td>
+<td>0-4095</td>
+<td>实际输入特征图宽度-1</td>
+</tr>
+<tr>
+<td>[59:56]</td>
+<td>4</td>
+<td>卷积核高度</td>
+<td>0-15</td>
+<td>实际卷积核高度-1</td>
+</tr>
+<tr>
+<td>[63:60]</td>
+<td>4</td>
+<td>卷积核宽度</td>
+<td>0-15</td>
+<td>实际卷积核宽度-1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="block-2">Block 2</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>长度</th>
+<th>描述</th>
+<th>值域</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[3:0]</td>
+<td>4</td>
+<td>上方 Padding 长度</td>
+<td>0-15</td>
+<td></td>
+</tr>
+<tr>
+<td>[7:4]</td>
+<td>4</td>
+<td>下方 Padding 长度</td>
+<td>0-15</td>
+<td></td>
+</tr>
+<tr>
+<td>[11:8]</td>
+<td>4</td>
+<td>左侧 Padding 长度</td>
+<td>0-15</td>
+<td></td>
+</tr>
+<tr>
+<td>[15:12]</td>
+<td>4</td>
+<td>右侧 Padding 长度</td>
+<td>0-15</td>
+<td></td>
+</tr>
+<tr>
+<td>[19:16]</td>
+<td>4</td>
+<td>激活函数</td>
+<td>Enum</td>
+<td>0:None, 1:ReLu, 2:SiLU</td>
+</tr>
+<tr>
+<td>[31:20]</td>
+<td>12</td>
+<td>Reserved</td>
+<td>--</td>
+<td></td>
+</tr>
+<tr>
+<td>[63:32]</td>
+<td>32</td>
+<td>权重首地址</td>
+<td>-</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="block-3">Block 3</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>长度</th>
+<th>描述</th>
+<th>值域</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[31:0]</td>
+<td>32</td>
+<td>输入特征图首地址</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>[63:32]</td>
+<td>32</td>
+<td>输出特征图首地址</td>
+<td>-</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../hardware/core/" class="btn btn-neutral float-left" title="加速器核心"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../instructions/" class="btn btn-neutral float-right" title="指令集">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../hardware/core/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../instructions/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

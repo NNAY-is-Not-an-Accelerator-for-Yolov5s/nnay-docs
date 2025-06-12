@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>指令集 - NNAY Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u6307\u4ee4\u96c6";
+        var mkdocs_page_input_path = "isa/instructions.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> NNAY Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">首页</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">硬件架构</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/overview/">概述</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/core/">加速器核心</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">指令集架构</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../instruction_format/">指令格式</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">指令集</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_2">数据传输指令</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">加载指令</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_4">存储指令</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_5">寄存器传输指令</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_6">算术指令</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_7">整数算术指令</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_8">比较指令</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_9">逻辑指令</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_10">基本逻辑操作</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_11">移位指令</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_12">控制流指令</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_13">分支指令</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_14">跳转指令</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_15">系统指令</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_16">条件执行指令</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_17">指令编码示例</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#add-r">ADD 指令（R 型）</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#addi-i">ADDI 指令（I 型）</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#beq-b">BEQ 指令（B 型）</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jal-j">JAL 指令（J 型）</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">NNAY Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">指令集架构</li>
+      <li class="breadcrumb-item active">指令集</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="_1">基本指令</h1>
+<h2 id="_2">数据传输指令</h2>
+<h3 id="_3">加载指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LD</td>
+<td>LD Rd, offset(Rs1)</td>
+<td>加载字</td>
+<td>Rd = Mem[Rs1 + offset]</td>
+</tr>
+<tr>
+<td>LDH</td>
+<td>LDH Rd, offset(Rs1)</td>
+<td>加载半字</td>
+<td>Rd = SignExt(Mem[Rs1 + offset][15:0])</td>
+</tr>
+<tr>
+<td>LDU</td>
+<td>LDU Rd, offset(Rs1)</td>
+<td>加载无符号半字</td>
+<td>Rd = ZeroExt(Mem[Rs1 + offset][15:0])</td>
+</tr>
+<tr>
+<td>LDB</td>
+<td>LDB Rd, offset(Rs1)</td>
+<td>加载字节</td>
+<td>Rd = SignExt(Mem[Rs1 + offset][7:0])</td>
+</tr>
+<tr>
+<td>LDBU</td>
+<td>LDBU Rd, offset(Rs1)</td>
+<td>加载无符号字节</td>
+<td>Rd = ZeroExt(Mem[Rs1 + offset][7:0])</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_4">存储指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ST</td>
+<td>ST Rs2, offset(Rs1)</td>
+<td>存储字</td>
+<td>Mem[Rs1 + offset] = Rs2</td>
+</tr>
+<tr>
+<td>STH</td>
+<td>STH Rs2, offset(Rs1)</td>
+<td>存储半字</td>
+<td>Mem[Rs1 + offset][15:0] = Rs2[15:0]</td>
+</tr>
+<tr>
+<td>STB</td>
+<td>STB Rs2, offset(Rs1)</td>
+<td>存储字节</td>
+<td>Mem[Rs1 + offset][7:0] = Rs2[7:0]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">寄存器传输指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MOV</td>
+<td>MOV Rd, Rs1</td>
+<td>寄存器间传输</td>
+<td>Rd = Rs1</td>
+</tr>
+<tr>
+<td>LI</td>
+<td>LI Rd, imm</td>
+<td>加载立即数</td>
+<td>Rd = SignExt(imm)</td>
+</tr>
+<tr>
+<td>LUI</td>
+<td>LUI Rd, imm</td>
+<td>加载上立即数</td>
+<td>Rd = imm &lt;&lt; 16</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">算术指令</h2>
+<h3 id="_7">整数算术指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADD</td>
+<td>ADD Rd, Rs1, Rs2</td>
+<td>加法</td>
+<td>Rd = Rs1 + Rs2</td>
+</tr>
+<tr>
+<td>ADDI</td>
+<td>ADDI Rd, Rs1, imm</td>
+<td>加立即数</td>
+<td>Rd = Rs1 + SignExt(imm)</td>
+</tr>
+<tr>
+<td>SUB</td>
+<td>SUB Rd, Rs1, Rs2</td>
+<td>减法</td>
+<td>Rd = Rs1 - Rs2</td>
+</tr>
+<tr>
+<td>SUBI</td>
+<td>SUBI Rd, Rs1, imm</td>
+<td>减立即数</td>
+<td>Rd = Rs1 - SignExt(imm)</td>
+</tr>
+<tr>
+<td>NEG</td>
+<td>NEG Rd, Rs1</td>
+<td>取负</td>
+<td>Rd = -Rs1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_8">比较指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMP</td>
+<td>CMP Rs1, Rs2</td>
+<td>比较</td>
+<td>SR = FLAGS(Rs1 - Rs2)</td>
+</tr>
+<tr>
+<td>CMPI</td>
+<td>CMPI Rs1, imm</td>
+<td>与立即数比较</td>
+<td>SR = FLAGS(Rs1 - SignExt(imm))</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_9">逻辑指令</h2>
+<h3 id="_10">基本逻辑操作</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AND</td>
+<td>AND Rd, Rs1, Rs2</td>
+<td>按位与</td>
+<td>Rd = Rs1 &amp; Rs2</td>
+</tr>
+<tr>
+<td>ANDI</td>
+<td>ANDI Rd, Rs1, imm</td>
+<td>按位与立即数</td>
+<td>Rd = Rs1 &amp; ZeroExt(imm)</td>
+</tr>
+<tr>
+<td>OR</td>
+<td>OR Rd, Rs1, Rs2</td>
+<td>按位或</td>
+<td>Rd = Rs1 | Rs2</td>
+</tr>
+<tr>
+<td>ORI</td>
+<td>ORI Rd, Rs1, imm</td>
+<td>按位或立即数</td>
+<td>Rd = Rs1 | ZeroExt(imm)</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>XOR Rd, Rs1, Rs2</td>
+<td>按位异或</td>
+<td>Rd = Rs1 ^ Rs2</td>
+</tr>
+<tr>
+<td>XORI</td>
+<td>XORI Rd, Rs1, imm</td>
+<td>按位异或立即数</td>
+<td>Rd = Rs1 ^ ZeroExt(imm)</td>
+</tr>
+<tr>
+<td>NOT</td>
+<td>NOT Rd, Rs1</td>
+<td>按位取反</td>
+<td>Rd = ~Rs1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_11">移位指令</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLL</td>
+<td>SLL Rd, Rs1, Rs2</td>
+<td>逻辑左移</td>
+<td>Rd = Rs1 &lt;&lt; Rs2[4:0]</td>
+</tr>
+<tr>
+<td>SLLI</td>
+<td>SLLI Rd, Rs1, imm</td>
+<td>逻辑左移立即数</td>
+<td>Rd = Rs1 &lt;&lt; imm[4:0]</td>
+</tr>
+<tr>
+<td>SRL</td>
+<td>SRL Rd, Rs1, Rs2</td>
+<td>逻辑右移</td>
+<td>Rd = Rs1 &gt;&gt; Rs2[4:0]</td>
+</tr>
+<tr>
+<td>SRLI</td>
+<td>SRLI Rd, Rs1, imm</td>
+<td>逻辑右移立即数</td>
+<td>Rd = Rs1 &gt;&gt; imm[4:0]</td>
+</tr>
+<tr>
+<td>SRA</td>
+<td>SRA Rd, Rs1, Rs2</td>
+<td>算术右移</td>
+<td>Rd = Rs1 &gt;&gt;&gt; Rs2[4:0]</td>
+</tr>
+<tr>
+<td>SRAI</td>
+<td>SRAI Rd, Rs1, imm</td>
+<td>算术右移立即数</td>
+<td>Rd = Rs1 &gt;&gt;&gt; imm[4:0]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_12">控制流指令</h2>
+<h3 id="_13">分支指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BEQ</td>
+<td>BEQ Rs1, Rs2, offset</td>
+<td>相等时分支</td>
+<td>if (Rs1 == Rs2) PC = PC + offset</td>
+</tr>
+<tr>
+<td>BNE</td>
+<td>BNE Rs1, Rs2, offset</td>
+<td>不等时分支</td>
+<td>if (Rs1 != Rs2) PC = PC + offset</td>
+</tr>
+<tr>
+<td>BLT</td>
+<td>BLT Rs1, Rs2, offset</td>
+<td>小于时分支</td>
+<td>if (Rs1 &lt; Rs2) PC = PC + offset</td>
+</tr>
+<tr>
+<td>BGE</td>
+<td>BGE Rs1, Rs2, offset</td>
+<td>大于等于时分支</td>
+<td>if (Rs1 &gt;= Rs2) PC = PC + offset</td>
+</tr>
+<tr>
+<td>BLTU</td>
+<td>BLTU Rs1, Rs2, offset</td>
+<td>无符号小于时分支</td>
+<td>if (Rs1 &lt;u Rs2) PC = PC + offset</td>
+</tr>
+<tr>
+<td>BGEU</td>
+<td>BGEU Rs1, Rs2, offset</td>
+<td>无符号大于等于时分支</td>
+<td>if (Rs1 &gt;=u Rs2) PC = PC + offset</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_14">跳转指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>J</td>
+<td>J offset</td>
+<td>无条件跳转</td>
+<td>PC = PC + offset</td>
+</tr>
+<tr>
+<td>JR</td>
+<td>JR Rs1</td>
+<td>寄存器跳转</td>
+<td>PC = Rs1</td>
+</tr>
+<tr>
+<td>JAL</td>
+<td>JAL Rd, offset</td>
+<td>跳转并链接</td>
+<td>Rd = PC + 4; PC = PC + offset</td>
+</tr>
+<tr>
+<td>JALR</td>
+<td>JALR Rd, Rs1</td>
+<td>寄存器跳转并链接</td>
+<td>Rd = PC + 4; PC = Rs1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_15">系统指令</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SYS</td>
+<td>SYS imm</td>
+<td>系统调用</td>
+<td>触发系统调用异常</td>
+</tr>
+<tr>
+<td>BREAK</td>
+<td>BREAK</td>
+<td>断点</td>
+<td>触发断点异常</td>
+</tr>
+<tr>
+<td>NOP</td>
+<td>NOP</td>
+<td>空操作</td>
+<td>无操作</td>
+</tr>
+<tr>
+<td>HALT</td>
+<td>HALT</td>
+<td>停机</td>
+<td>处理器停止执行</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_16">条件执行指令</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>描述</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MOVEQ</td>
+<td>MOVEQ Rd, Rs1</td>
+<td>相等时移动</td>
+<td>if (Z == 1) Rd = Rs1</td>
+</tr>
+<tr>
+<td>MOVNE</td>
+<td>MOVNE Rd, Rs1</td>
+<td>不等时移动</td>
+<td>if (Z == 0) Rd = Rs1</td>
+</tr>
+<tr>
+<td>MOVLT</td>
+<td>MOVLT Rd, Rs1</td>
+<td>小于时移动</td>
+<td>if (N != V) Rd = Rs1</td>
+</tr>
+<tr>
+<td>MOVGE</td>
+<td>MOVGE Rd, Rs1</td>
+<td>大于等于时移动</td>
+<td>if (N == V) Rd = Rs1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_17">指令编码示例</h2>
+<p>以下是一些常见指令的二进制编码示例：</p>
+<h3 id="add-r">ADD 指令（R 型）</h3>
+<pre><code>操作码   Rs1    Rs2    Rd    功能码   保留位
+000000  00001  00010  00011  000001  00000
+  6位    5位    5位    5位     6位     5位
+</code></pre>
+<p>这表示 <code>ADD R3, R1, R2</code>（R3 = R1 + R2）。</p>
+<h3 id="addi-i">ADDI 指令（I 型）</h3>
+<pre><code>操作码   Rs1    Rd           立即数
+000001  00001  00011      0000000000001010
+  6位    5位    5位            16位
+</code></pre>
+<p>这表示 <code>ADDI R3, R1, 10</code>（R3 = R1 + 10）。</p>
+<h3 id="beq-b">BEQ 指令（B 型）</h3>
+<pre><code>操作码   Rs1    Rs2           偏移量
+000100  00001  00010      0000000000000100
+  6位    5位    5位            16位
+</code></pre>
+<p>这表示 <code>BEQ R1, R2, 4</code>（如果 R1 == R2，则 PC = PC + 4）。</p>
+<h3 id="jal-j">JAL 指令（J 型）</h3>
+<pre><code>操作码   Rd                 跳转偏移量
+001000  00001        000000000000000001000
+  6位    5位                   21位
+</code></pre>
+<p>这表示 <code>JAL R1, 8</code>（R1 = PC + 4; PC = PC + 8）。 </p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../instruction_format/" class="btn btn-neutral float-left" title="指令格式"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../instruction_format/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
