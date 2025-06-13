@@ -6,7 +6,8 @@ nav:
   - 首页: index.md
   - 硬件架构:
     - 概述: hardware/overview.md
-    - 加速器核心: hardware/core.md
+    - 核心: hardware/core.md
+    - 参数化配置: hardware/parameterization.md
   - 指令集架构:
     - 格式: isa/instruction_format.md
     - 寄存器: isa/registers.md
@@ -14,6 +15,13 @@ nav:
 
 markdown_extensions:
   - footnotes
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
 
 plugins:
   - search
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
