@@ -47,7 +47,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../hardware/overview/">概述</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/core/">加速器核心</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/core/">核心</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/parameterization/">参数化配置</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">指令集架构</span></p>
@@ -110,22 +112,17 @@
 </thead>
 <tbody>
 <tr>
-<td>[1:0]</td>
-<td>2</td>
+<td>[3:0]</td>
+<td>4</td>
 <td>Opcode</td>
 </tr>
 <tr>
-<td>[5:2]</td>
-<td>4</td>
-<td>Sub Opcode</td>
-</tr>
-<tr>
-<td>[7:6]</td>
+<td>[5:4]</td>
 <td>2</td>
 <td>Funct</td>
 </tr>
 <tr>
-<td>[63:8]</td>
+<td>[63:6]</td>
 <td>56</td>
 <td>指令参数</td>
 </tr>
@@ -135,14 +132,7 @@
 <p>指令分为：</p>
 <ul>
 <li>配置指令 (Configuration Instruction)</li>
-<li>用于配置加速器</li>
-<li>Opcode: 0b00</li>
 <li>计算指令 (Compute Instruction)</li>
-<li>用于执行计算操作</li>
-<li>Opcode: 0b01</li>
-<li>控制指令 (Control Instruction)</li>
-<li>用于控制加速器</li>
-<li>Opcode: 0b10</li>
 </ul>
 <h2 id="_3">地址计算</h2>
 <p>NNAY 指令中出现的地址偏移需要通过以下公式计算：</p>
@@ -150,11 +140,12 @@
 </code></pre>
 <p>其中，<code>BaseAddr</code> 为基地址，<code>Offset</code> 为偏移量。</p>
 <p>最小寻址单位为字节，均以小端存储。</p>
+<p>由上可知，寻址大小为4GB，偏移寻址大小为128MB。</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../hardware/core/" class="btn btn-neutral float-left" title="加速器核心"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../hardware/parameterization/" class="btn btn-neutral float-left" title="参数化配置"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../registers/" class="btn btn-neutral float-right" title="寄存器">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -178,7 +169,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../hardware/core/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../hardware/parameterization/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../registers/" style="color: #fcfcfc">Next &raquo;</a></span>
@@ -189,6 +180,8 @@
     <script>var base_url = "../..";</script>
     <script src="../../js/theme_extra.js"></script>
     <script src="../../js/theme.js"></script>
+      <script src="../../javascripts/mathjax.js"></script>
+      <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -47,7 +47,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../hardware/overview/">概述</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/core/">加速器核心</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/core/">核心</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hardware/parameterization/">参数化配置</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">指令集架构</span></p>
@@ -58,15 +60,17 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#_2">配置寄存器</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#mx">MX 模式寄存器</a>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#_3">基地址寄存器</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#_4">输入基地址寄存器</a>
+    <li class="toctree-l4"><a class="reference internal" href="#1">输入基地址寄存器1</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#_5">输出基地址寄存器</a>
+    <li class="toctree-l4"><a class="reference internal" href="#2">输入基地址寄存器2</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#_6">权重基地址寄存器</a>
+    <li class="toctree-l4"><a class="reference internal" href="#1_1">输出基地址寄存器1</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2_1">输出基地址寄存器2</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#_4">权重基地址寄存器</a>
     </li>
         </ul>
     </li>
@@ -104,31 +108,8 @@
                 <h1 id="_1">寄存器定义</h1>
 <p>在本文档中，指代名为<code>name</code>的寄存器时，统一使用<code>Reg(name)</code>表示。</p>
 <h2 id="_2">配置寄存器</h2>
-<h3 id="mx">MX 模式寄存器</h3>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>位宽</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MXMode</td>
-<td>4</td>
-<td>-</td>
-</tr>
-</tbody>
-</table>
-<p>MXMode 的值域为：</p>
-<ul>
-<li><code>0b0000</code>: 不使用MX模式</li>
-<li><code>0b0001</code>: 使用MX9模式</li>
-</ul>
-<p>其余值域保留。</p>
 <h3 id="_3">基地址寄存器</h3>
-<h4 id="_4">输入基地址寄存器</h4>
+<h4 id="1">输入基地址寄存器1</h4>
 <table>
 <thead>
 <tr>
@@ -139,13 +120,13 @@
 </thead>
 <tbody>
 <tr>
-<td>InputBaseAddr</td>
+<td>InputBaseAddr.1</td>
 <td>5</td>
 <td>输入基地址</td>
 </tr>
 </tbody>
 </table>
-<h4 id="_5">输出基地址寄存器</h4>
+<h4 id="2">输入基地址寄存器2</h4>
 <table>
 <thead>
 <tr>
@@ -156,13 +137,47 @@
 </thead>
 <tbody>
 <tr>
-<td>OutputBaseAddr</td>
+<td>InputBaseAddr.2</td>
+<td>5</td>
+<td>输入基地址</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1_1">输出基地址寄存器1</h4>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OutputBaseAddr.1</td>
 <td>5</td>
 <td>输出基地址</td>
 </tr>
 </tbody>
 </table>
-<h4 id="_6">权重基地址寄存器</h4>
+<h4 id="2_1">输出基地址寄存器2</h4>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OutputBaseAddr.2</td>
+<td>5</td>
+<td>输出基地址</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_4">权重基地址寄存器</h4>
 <table>
 <thead>
 <tr>
@@ -218,6 +233,8 @@
     <script>var base_url = "../..";</script>
     <script src="../../js/theme_extra.js"></script>
     <script src="../../js/theme.js"></script>
+      <script src="../../javascripts/mathjax.js"></script>
+      <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../../search/main.js"></script>
     <script>
         jQuery(function () {
